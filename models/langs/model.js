@@ -24,7 +24,7 @@ const langSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: false
+    unique: true
   },
   projectsCount: {
     type: String,

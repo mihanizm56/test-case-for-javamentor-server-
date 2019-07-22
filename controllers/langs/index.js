@@ -5,32 +5,32 @@ const { getLangsFromDb, addLangInDb } = require("../../models/langs");
 
 const get = async (req, res) => {
   const { group = "" } = req.query;
-  let langList = await getLangsFromDb();
-  if (group === BACKEND && langList.length) {
-    langList = langList.filter(
-      language =>
-        console.log("language", language.groups) ||
+
+  try {
+    let langList = await getLangsFromDb();
+
+    if (group === BACKEND && langList.length) {
+      langList = langList.filter(language =>
         language.groups.includes("backend")
-    );
+      );
+    }
+
+    if (group === FRONTEND && langList.length) {
+      langList = langList.filter(language =>
+        language.groups.includes(FRONTEND)
+      );
+    }
+
+    if (group === MOBILE && langList.length) {
+      langList = langList.filter(language => language.groups.includes(MOBILE));
+    }
+
+    res.status(200).send({ data: langList });
+  } catch (error) {
+    console.log("error", error);
+
+    res.status(500).send(error.errmsg);
   }
-
-  if (group === FRONTEND && langList.length) {
-    langList = langList.filter(
-      language =>
-        console.log("language", language) || language.groups.includes(FRONTEND)
-    );
-  }
-
-  if (group === MOBILE && langList.length) {
-    langList = langList.filter(
-      language =>
-        console.log("language", language) || language.groups.includes(MOBILE)
-    );
-  }
-
-  console.log("langList", langList);
-
-  res.status(200).send(langList);
 };
 
 const post = async (req, res) => {
