@@ -4,17 +4,17 @@ const langSchema = new mongoose.Schema({
   docs: {
     type: String,
     required: false,
-    unique: true
+    unique: false
   },
   year: {
-    type: Number,
+    type: String,
     required: false,
     unique: false
   },
   logo: {
     type: String,
     required: false,
-    unique: true
+    unique: false
   },
   groups: {
     type: [String],
@@ -24,10 +24,10 @@ const langSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   },
   projectsCount: {
-    type: Number,
+    type: String,
     required: true,
     unique: false
   }

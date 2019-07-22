@@ -34,11 +34,13 @@ const get = async (req, res) => {
 };
 
 const post = async (req, res) => {
-  const { ...data } = req.body;
+  const body = req.body;
   try {
-    const result = await addLangInDb(data);
+    const result = await addLangInDb(body);
     res.status(200).send(result);
   } catch (error) {
+    console.log("error", error);
+
     res.status(400).send(error.errmsg);
   }
 };
