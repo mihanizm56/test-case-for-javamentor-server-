@@ -6,7 +6,7 @@ const LangsModel = mongoose.model("Languages");
 addLangInDb = langData => {
   return (newUser = new LangsModel({
     ...langData
-  }));
+  })).save();
 };
 
 getLangsFromDb = username => {

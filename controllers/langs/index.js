@@ -1,30 +1,46 @@
 const BACKEND = "backend";
 const FRONTEND = "frontend";
 const MOBILE = "mobile";
-const { getLangsFromDb } = require("../../models/langs");
+const { getLangsFromDb, addLangInDb } = require("../../models/langs");
 
 const get = async (req, res) => {
   const { group = "" } = req.query;
   let langList = await getLangsFromDb();
   if (group === BACKEND && langList.length) {
-    langList = langList.filter(language => language.group.includes(BACKEND));
+    langList = langList.filter(
+      language =>
+        console.log("language", language.groups) ||
+        language.groups.includes("backend")
+    );
   }
 
   if (group === FRONTEND && langList.length) {
-    langList = langList.filter(language => language.group.includes(FRONTEND));
+    langList = langList.filter(
+      language =>
+        console.log("language", language) || language.groups.includes(FRONTEND)
+    );
   }
 
   if (group === MOBILE && langList.length) {
-    langList = langList.filter(language => language.group.includes(MOBILE));
+    langList = langList.filter(
+      language =>
+        console.log("language", language) || language.groups.includes(MOBILE)
+    );
   }
+
+  console.log("langList", langList);
 
   res.status(200).send(langList);
 };
 
 const post = async (req, res) => {
   const { ...data } = req.body;
-  console.log("data", data);
-  res.status(200);
+  try {
+    const result = await addLangInDb(data);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error.errmsg);
+  }
 };
 
 module.exports = { get, post };
