@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const sendSPA = require("../controllers/app");
-const authCtrl = require("../controllers/auth");
+const langsCtrl = require("../controllers/langs");
 
-router.get("*", sendSPA.get);
-
-router.post("/api/saveNewUser", authCtrl.createUser);
+router.get("/api/language", langsCtrl.get);
+router.post("/api/language", langsCtrl.post);
 
 module.exports = router;

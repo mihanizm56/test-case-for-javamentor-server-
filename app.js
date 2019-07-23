@@ -1,10 +1,9 @@
 require("dotenv").config();
-require("./models/db");
+require("./services/db-listeners");
 
 const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
-const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const router = require("./routes");
 const app = express();
@@ -40,7 +39,7 @@ const connectDB = () => {
     useNewUrlParser: true
   };
 
-  mongoose.connect(process.env.DB_URL, options);
+  mongoose.connect(process.env.DB_URI, options);
   mongoose.set("useCreateIndex", true);
 
   console.log("connected to mongo db");
